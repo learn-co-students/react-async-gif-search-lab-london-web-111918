@@ -9,20 +9,20 @@ export default class GifListContainer extends React.Component {
 	};
 
 	handleSearchedTerm = event => {
-		this.setState({
-			searchTerm: event
-		});
-		this.getGifs();
+		this.getGifs(event);
 	};
 
-	getGifs = () => {
+	getGifs = event => {
 		fetch(
-			`http://api.giphy.com/v1/gifs/search?q=${
-				this.state.searchTerm
-			}&api_key=dc6zaTOxFJmzC&rating=g`
+			`http://api.giphy.com/v1/gifs/search?q=${event}&api_key=dc6zaTOxFJmzC&rating=g`
 		)
 			.then(res => res.json())
-			.then(data => this.setState({ gifs: data.data.slice(0, 3) }));
+			.then(data =>
+				this.setState({
+					searchTerm: event,
+					gifs: data.data.slice(0, 3)
+				})
+			);
 	};
 
 	render() {
